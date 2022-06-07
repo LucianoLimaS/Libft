@@ -12,10 +12,10 @@
 
 #include "libft.h"
 
-static	size_t tot(char const *s, char c)
+static	size_t	tot(char const *s, char c)
 {
-	size_t i;
-	size_t j;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	j = 0;
@@ -33,14 +33,14 @@ static	size_t tot(char const *s, char c)
 	return (i);
 }
 
-static size_t    word_len(char const *s, char sep)
+static size_t	word_len(char const *s, char sep)
 {
-    size_t    len;
+	size_t	len;
 
-    len = 0;
-    while (s[len] && s[len] != sep)
-        len++;
-    return (len);
+	len = 0;
+	while (s[len] && s[len] != sep)
+		len++;
+	return (len);
 }
 
 static char	**split(char **ptr, char const *s, char c, size_t total)
@@ -50,29 +50,29 @@ static char	**split(char **ptr, char const *s, char c, size_t total)
 
 	i = 0;
 	while (i < total)
+	{
+		while (*s && *s == c)
+			s++;
+		if (*s)
 		{
-			while (*s && *s == c)
-				s++;
-			if (*s)
-			{
-				len = word_len(s, c);
-				ptr[i++] = ft_substr(s, 0, len);
-			}
-			s += len;
+			len = word_len(s, c);
+			ptr[i++] = ft_substr(s, 0, len);
 		}
+		s += len;
+	}
 	return (ptr);
 }
 
 char	**ft_split(char const *s, char c)
 {
 	char	**ptr;
-	size_t		total;
+	size_t	total;
 
 	total = tot(s, c);
-	ptr = malloc(sizeof(char *) * total + 1);
+	ptr = malloc(sizeof(char *) * (total + 1));
 	if (!ptr)
-		return (0);
-	ptr[total] = (NULL);
+		return (NULL);
+	ptr[total] = NULL;
 	split(ptr, s, c, total);
 	return (ptr);
 }
